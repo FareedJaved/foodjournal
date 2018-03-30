@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-
+// in charge of displaying the list of food items 
+// entered on a specific date 
 class FoodList extends Component {
   constructor(props) {
     super(props); 
     this.state = {
-      foodList: {},
+      foodList: new Map(),  
     }
   }
 
