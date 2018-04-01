@@ -1,36 +1,14 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {FoodList} from './FoodList'; 
 
-// in charge of displaying the list of food items 
-// entered on a specific date 
-class FoodList extends Component {
-  constructor(props) {
-    super(props); 
-    this.state = {
-      foodList: new Map(),  
-    }
-  }
+// import request from 'request'; 
 
-  render() {
-    return(
-    <div>
-      <ul>
-        {this.state.foodList.forEach((val,key,map) => 
-          <li>{key} from {val}</li>
-        )}
-      </ul> 
-      <button>Add Item</button>
-    </div>
-    );
-  }
-}
+
 
 class App extends Component {
 
-  handleFormSubmit(e) {
-    e.preventDefault(); 
-  }
   render() {
     return (
       <div className="App">
@@ -40,9 +18,6 @@ class App extends Component {
         </header>
 
         <FoodList/>
-        <form onSubmit={this.handleFormSubmit}>
-          
-        </form>
       </div>
     );
   }

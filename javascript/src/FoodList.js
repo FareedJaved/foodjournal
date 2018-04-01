@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-// Displays the list of food items 
-// also renders a form for food input 
+// Displays the list of food items. 
+// Also renders a form for food input 
 // and will allow for items to be deleted   
 export class FoodList extends Component {
     constructor(props) {
@@ -28,7 +28,7 @@ export class FoodList extends Component {
         foodList: newFoodList
       })
       e.preventDefault(); 
-      console.log("peace out bitches")
+      console.log(newFoodList)
     }
   
     render() {
