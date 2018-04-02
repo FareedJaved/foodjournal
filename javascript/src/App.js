@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import {FoodList} from './FoodList'; 
-// import request from 'request'; 
+import Select, { Async } from 'react-select'; 
+import 'react-select/dist/react-select.css';
 
 class App extends Component {
 
@@ -51,7 +52,22 @@ class App extends Component {
 
   }
 
+
+  // calling the rails backend for the FDA food items
+  getOptions = (input, callback) => {
+    let myFakeOptions = [{value: 'one', label: 'One'}]
+    setTimeout(() => {
+      callback(null, {
+        options: myFakeOptions,
+        // CAREFUL! Only set this to true when there are no more options,
+        // or more specific queries will not be sent to the server.
+        complete: true
+      });
+    }, 500);
+  };
+
   render() {
+    let value = ''
     return (
     <div>
 
@@ -74,6 +90,13 @@ class App extends Component {
           {/* Submit Button */ }
           <input type="submit" name="Submit" /> 
         </form>
+
+        <Select
+          name="foodItem"
+          value={value}
+          onChange = {(e)=> this.setState({foodItem: e.target.value})}
+
+        /> 
     </div>
     );
   }
