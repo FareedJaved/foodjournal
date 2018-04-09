@@ -3,6 +3,7 @@ import './App.css';
 import {FoodList} from './FoodList'; 
 import Select, { Async } from 'react-select'; 
 import 'react-select/dist/react-select.css';
+import fetch from 'isomorphic-fetch'; 
 
 class App extends Component {
 
@@ -12,6 +13,7 @@ class App extends Component {
     this.state = {
       foodItem: '', 
       manufacturer:'',
+      foodGroup: '',
       foodList: []
     }
   }
@@ -52,8 +54,8 @@ class App extends Component {
 
   }
 
-
-  // calling the rails backend for the FDA food items
+  // TODO: 
+  //  Call the spring backend for the FDA food items
   getOptions = (input, callback) => {
     let myFakeOptions = [{value: 'one', label: 'One'}]
     setTimeout(() => {
@@ -67,7 +69,6 @@ class App extends Component {
   };
 
   render() {
-    let value = ''
     return (
     <div>
 
@@ -91,11 +92,19 @@ class App extends Component {
           <input type="submit" name="Submit" /> 
         </form>
 
+        {/* this is for what they ate */}
         <Select
           name="foodItem"
-          value={value}
+          value={this.state.foodItem}
           onChange = {(e)=> this.setState({foodItem: e.target.value})}
 
+        /> 
+
+        {/* This is for the food group */}
+        <Select 
+          name="foodGroup"
+          value={this.state.manufacturer}
+          onChange = {(e) => this.setState({foodGroup: e.target.value})}
         /> 
     </div>
     );
