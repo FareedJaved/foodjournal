@@ -1,2 +1,2 @@
 # foodjournal
-A digital food journal to record what you eat. 
+Recording what you eat, so you can decide what you are. 
