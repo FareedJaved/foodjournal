@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import {FoodList} from './FoodList'; 
 import Select from 'react-select'; 
 import 'react-select/dist/react-select.css';
 import axios from 'axios' ; 
@@ -18,21 +17,6 @@ class App extends Component {
       foodGroupList:[],
      
     }
-  }
-
-  // takes a list and an item and vendor 
-  // returns a list with the first 
-  remove = (list, date ) =>  {
-    return list.filter(e => e.id !== date)
-  }
-  // will take the key and value that need to be deleted 
-  // from the map 
-  handleDelete = (id) => {
-    let listAfterDelete = this.remove(this.state.foodList, id)
-    this.setState({
-      foodList: listAfterDelete
-    })
-    console.log("deleting item from map")
   }
 
   // Calling the spring backend for the FDA food items
@@ -79,11 +63,6 @@ class App extends Component {
     const AsyncComponent = Select.Async; 
     return (
     <div>
-
-      <FoodList 
-        foodList={this.state.foodList} 
-        handleDelete={(id) => this.handleDelete(id)} 
-      />
 
       {/* User selects the food group that the items they ate belongs to */}
       <h3>Select the food groups in which the things you ate belong to </h3>
