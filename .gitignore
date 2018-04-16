@@ -1,1 +1,4 @@
 ENV/
+journalapi/bin/
+journalapi/bin/main/application.properties
+*/application.properties

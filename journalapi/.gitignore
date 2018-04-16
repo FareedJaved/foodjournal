@@ -1,6 +1,3 @@
-#Projects 
-bin/
-# Gradle 
 .gradle
 /build/
 !gradle/wrapper/gradle-wrapper.jar
