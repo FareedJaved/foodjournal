@@ -27,7 +27,7 @@ public class FoodGroupController implements ErrorController {
 		
 		ResponseEntity<String> response = 
 				restTemplate.getForEntity(uri, String.class);
-		System.out.println("FOOD GROUP WHAT IT DO");
+
 		return response.getBody();
 		
 	}
