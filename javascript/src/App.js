@@ -4,7 +4,6 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import axios from 'axios' ; 
 
-
 class App extends Component {
 
   constructor(props) {
@@ -19,16 +18,15 @@ class App extends Component {
     }
   }
 
-  // Calling the spring backend for the FDA food items
+  // Calling the backend for the FDA food items
   getOptions = (input, callback) => {
     if (!input) {
 			return Promise.resolve({ options: [] });
     }
     return axios.get(`http://localhost:8080/search?item=${input}`)
-      .then((response)=> response.json())
-      .then((json)=> {
-        console.log("I am inside getOptions")
-        return { options: json.list.item }
+      .then((response)=> {
+        console.log(response)
+        return {options: response.data.list.item}
       })
   };
 
@@ -46,15 +44,16 @@ class App extends Component {
         return {options: response.data.list.item}
       }) 
   }
-  onManufacturerChange = (input) => {
+
+  onManufacturerChange = (input, prevState) => {
+    // should we consider doing some processing here. 
     this.setState({
-      manufacturer: input,
+      manufacturer: prevState.concat(input),
     })
   }
 
   onItemChange = (value, prevState) =>  {
     this.setState({
-      
       foodItem: prevState.concat(value),
     });
   }
