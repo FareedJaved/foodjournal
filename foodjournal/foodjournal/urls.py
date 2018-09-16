@@ -1,4 +1,4 @@
-"""journal_api URL Configuration
+""" foodjournal URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from rest_framework import routers
-from journal_api import views
+from foodjournal import views
 
 # Routers provide an easy way of automatically determining the URL conf
 router = routers.DefaultRouter()
