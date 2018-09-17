@@ -2,6 +2,6 @@ language: python
 python:
   - "3.6"
 install:
-  - pip install -r foodjournal/travis/requirements.txt 
+  - pip install -r travis/requirements.txt 
 script: 
   - python manage.py test 
