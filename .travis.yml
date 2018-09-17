@@ -1,7 +1,7 @@
 language: python 
 python:
-  -"3.6"
+  "3.6"
 install:
-  -pip install -r foodjournal/foodjournal/travis/requirements.txt 
+  pip install -r foodjournal/foodjournal/travis/requirements.txt 
 script: 
-  -python manage.py test 
+  python manage.py test 
