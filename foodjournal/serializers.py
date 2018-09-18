@@ -1,14 +1,14 @@
-from django.contrib.auth.models import User, Group
+from journalapi.models import User, FoodEntry
 from rest_framework import serializers
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta: 
         model = User 
-        fields = ('url', 'username', 'email', 'groups')
+        fields = ('url', 'first_name', 'last_name', 'email', 'age', 'weight', 'birthday')
 
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
+class FoodEntrySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Group 
-        fields = ('url', 'name')
+        model = FoodEntry 
+        fields = ('url', 'food_item', 'amount_eaten', 'time_eaten', 'associated_user')

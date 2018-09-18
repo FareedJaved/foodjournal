@@ -1,20 +1,20 @@
-from django.contrib.auth.models import User, Group
+from journalapi.models import User, FoodEntry
 from rest_framework import viewsets
-from foodjournal.serializers import UserSerializer, GroupSerializer
+from foodjournal.serializers import UserSerializer, FoodEntrySerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited. 
     """
-    queryset = User.objects.all().order_by('-date_joined')
+    queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-class GroupViewSet(viewsets.ModelViewSet):
+class FoodEntryViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
+    queryset = FoodEntry.objects.all()
+    serializer_class = FoodEntrySerializer
     
