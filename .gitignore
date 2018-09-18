@@ -1,2 +1,4 @@
 api_admin/.vscode/
 db.sqlite3
+*/.vscode
+.vscode
