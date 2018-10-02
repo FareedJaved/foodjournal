@@ -8,6 +8,7 @@ requests = "*"
 django = "*"
 djangorestframework = "*"
 "psycopg2" = "*"
+pylint-django = "*"
 
 [dev-packages]
 
