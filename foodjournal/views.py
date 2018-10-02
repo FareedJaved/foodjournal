@@ -26,6 +26,8 @@ class UserCountView(viewsets.ViewSet):
     """
     A view that returns the count of active users in JSON.
     """
+    renderer_classes = (JSONRenderer, )
+
     queryset = User.objects.all()
     def list(self, request, format=None):
         return Response({"fj_count": len(self.queryset)})
