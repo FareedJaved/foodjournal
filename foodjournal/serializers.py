@@ -16,4 +16,4 @@ class FoodEntrySerializer(serializers.HyperlinkedModelSerializer):
 class FoodGroupsSerializer(serializers.HyperlinkedModelSerializer): 
     class Meta: 
         model = FoodGroups
-        fields = ('group_name',)
+        fields = ('group_name', 'group_id')
