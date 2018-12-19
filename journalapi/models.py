@@ -16,4 +16,7 @@ class FoodEntry(models.Model):
     time_eaten = models.DateTimeField(null=False)
     associated_user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
 
+class FoodGroups(models.Model): 
+    group_name = models.CharField(max_length=50, null=False, blank=False)
+    group_id = models.IntegerField(null=False, blank=False)
 

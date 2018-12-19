@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'journalapi',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -56,6 +58,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -93,9 +96,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'foodjournal',
-        'PGUSER': 'fareedjaved',
-        'PGPASSWORD': 'Yuccabyte', 
-        'HOST': 'localhost', 
+        'PGUSER': os.environ['PGUSER'],
+        'PGPASSWORD': os.environ['PGPASSWORD'], 
+        'HOST': os.environ['PGHOST'], 
         'PORT': 5432,
     }
 }

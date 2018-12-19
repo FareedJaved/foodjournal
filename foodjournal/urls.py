@@ -20,8 +20,8 @@ from foodjournal import views
 # Routers provide an easy way of automatically determining the URL conf
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
-router.register(r'foodentries', views.FoodEntryViewSet)
-router.register(r'getfood', views.UserCountView)
+router.register(r'food', views.FoodEntryViewSet)
+router.register(r'foodgroups', views.FoodGroupsViewSet)
  
 
 # Wire up our API using automatic URL routing.

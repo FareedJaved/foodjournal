@@ -1,4 +1,4 @@
-from journalapi.models import User, FoodEntry
+from journalapi.models import User, FoodEntry, FoodGroups
 from rest_framework import serializers
 
 
@@ -12,3 +12,8 @@ class FoodEntrySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = FoodEntry 
         fields = ('url', 'food_item', 'amount_eaten', 'time_eaten', 'associated_user')
+
+class FoodGroupsSerializer(serializers.HyperlinkedModelSerializer): 
+    class Meta: 
+        model = FoodGroups
+        fields = ('group_name',)

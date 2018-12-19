@@ -1,9 +1,11 @@
-from journalapi.models import User, FoodEntry
+from journalapi.models import User, FoodEntry, FoodGroups
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.renderers import JSONRenderer
-from foodjournal.serializers import UserSerializer, FoodEntrySerializer
+from foodjournal.serializers import UserSerializer, FoodEntrySerializer, FoodGroupsSerializer
+from requests import request 
+import os
+import requests
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -22,15 +24,26 @@ class FoodEntryViewSet(viewsets.ModelViewSet):
     serializer_class = FoodEntrySerializer
 
 
-class UserCountView(viewsets.ViewSet):
+class FoodGroupsViewSet(viewsets.ModelViewSet):
     """
-    A view that returns the count of active users in JSON.
+    A view that returns the food groups from the USDA database.
     """
-    renderer_classes = (JSONRenderer, )
+    
+    queryset = FoodGroups.objects.all()
+    serializer_class = FoodGroupsSerializer
+    # api_key = os.environ['USDA']
 
-    queryset = User.objects.all()
-    def list(self, request, format=None):
-        return Response({"fj_count": len(self.queryset)})
+
+    # def get_food_groups(self):
+    #     url = f'https://api.nal.usda.gov/ndb/list?format=json&lt=g&sort=n&api_key={self.api_key}'
+    #     api_response = requests.get(url)
+
+    #     return api_response
+    
+    # def list(self, request, format=None):
+    #     food_group_query = self.get_food_groups() 
+    #     return Response({"food_groups": food_group_query})
+        
 
 
     
