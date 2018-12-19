@@ -1,86 +1,88 @@
 import React, { Component } from 'react';
 import './App.css';
-import Select from 'react-select'; 
+import AsyncSelect from 'react-select/lib/Async';
 import 'react-select/dist/react-select.css';
-import axios from 'axios' ; 
+import axios from 'axios' ;
+
 
 class App extends Component {
 
   constructor(props) {
-    super(props); 
+    super(props);
 
     this.state = {
-      foodItem: '', 
-      foodList: [],
+      foodItem: '',
       foodGroup: '',
-      foodGroupList:[],
-     
     }
   }
 
-  // Calling the backend for the FDA food items
-  getOptions = (input, callback) => {
+  loadOptions = (input, callback) => {
     if (!input) {
 			return Promise.resolve({ options: [] });
     }
-    return axios.get(`http://localhost:8080/search?item=${input}`)
+    return axios.get(`http://localhost:8000/search?item=${input}`)
       .then((response)=> {
         console.log(response)
         return {options: response.data.list.item}
       })
   };
 
-  // This will be used for the button that chooses 
-	// the particular food group. Whatver gets chosen here 
-	// should probably get integrated with getOptions since 
-	// we want that to be bundled together for the backend... 
   getFoodGroups = (input) => {
-    if (!input) {
-			return Promise.resolve({ options: [] });
+    if (input) {
+      return axios.get('http://localhost:8000/foodgroups/?format=json')
+        .then((response)=> {
+          console.log(response.data.results.map(x => x['group_name']))
+          return response.data.results.map(x => x['group_name'])
+        })
     }
-    return axios.get('http://localhost:8080/foodgroup')
-      .then((response)=> {
-        console.log(response.data.list.item)
-        return {options: response.data.list.item}
-      }) 
+
   }
 
-  onManufacturerChange = (input, prevState) => {
-    // should we consider doing some processing here. 
+  onFoodGroupChange = (input) => {
     this.setState({
-      manufacturer: prevState.concat(input),
+      foodGroup: input,
     })
   }
 
-  onItemChange = (value, prevState) =>  {
+  onItemChange = (value) =>  {
     this.setState({
-      foodItem: prevState.concat(value),
+      foodItem: value,
     });
   }
 
+  loadFoodGroupOptions = (inputValue: string) => {
+    setTimeout(() => {
+      console.log(inputValue)
+      this.getFoodGroups(inputValue);
+    }, 5000);
+  };
+
+
   render() {
-    const AsyncComponent = Select.Async; 
     return (
-    <div>
+      <div>
 
-      {/* User selects the food group that the items they ate belongs to */}
-      <h3>Select the food groups in which the things you ate belong to </h3>
-      <Select.Async multi={true} value={this.state.manufacturer} 
-        onChange={this.onManufacturerChange} 
-        onValueClicked={console.log("Clicked")}
-        valueKey="name" labelKey="name" 
-        loadOptions={this.getFoodGroups} 
-      /> 
+        <h3>Select a food group first </h3>
+        <AsyncSelect
+          cacheOptions
+          loadOptions={this.loadFoodGroupOptions}
+          defaultOptions
+          onInputChange={this.onFoodGroupChange}
+        />
 
-      {/* User selects what they ate */}
-      <br/> 
-      <h3>What did you eat today?</h3> 
-      <AsyncComponent multi={true} value={this.state.foodItem} 
-        onChange={this.onItemChange} loadOptions={this.getOptions}
-        backspaceRemoves={true} placeholder={"Food Item"} /> 
-      <br/> 
-    
-    </div>
+        <br/>
+
+        <h3>Enter what you ate</h3>
+        <AsyncSelect
+          cacheOptions
+          loadOptions={this.loadOptions}
+          defaultOptions
+          onInputChange={this.onItemChange}
+        />
+
+        <br/>
+
+      </div>
     );
   }
 }
