@@ -30,33 +30,34 @@ class App extends Component {
     }
   };
 
-    foodGroupOptions = inputValue =>
-      new Promise(resolve => {
-        setTimeout(() => {
-          resolve(this.getFoodGroups(inputValue));
-        }, 1000);
-      });
+  foodGroupOptions = inputValue =>
+    new Promise(resolve => {
+      setTimeout(() => {
+        resolve(this.getFoodGroups(inputValue));
+      }, 1000);
+    });
 
     // Mapping to food group data
-    getOptionValue = option => option.group_id;
-    getOptionLabel = option => option.group_name;
+  getOptionValue = option => option.group_id;
+  getOptionLabel = option => option.group_name;
 
-    render() {
-
-      return (
-        <div>
-        <h3>Select a Food Group first. </h3>
-        <AsyncSelect
-          cacheOptions
-          defaultOptions
-          loadOptions={this.foodGroupOptions}
-          getOptionValue={this.getOptionValue}
-          getOptionLabel={this.getOptionLabel}
-        />
-
-        </div>
-      );
-    }
+  render() {
+    return (
+      <div>
+      <h3>Select a Food Group first. </h3>
+      <AsyncSelect
+        cacheOptions
+        defaultOptions
+        loadOptions={this.foodGroupOptions}
+        getOptionValue={this.getOptionValue}
+        getOptionLabel={this.getOptionLabel}
+      />
+      <br/>
+      <h3> Select a food item that you ate </h3>
+      
+      </div>
+    );
+  }
 }
 
 export default App;
