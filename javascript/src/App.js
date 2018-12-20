@@ -26,7 +26,7 @@ class App extends Component {
       return axios.get('http://localhost:8000/foodgroups/?format=json')
         .then((response) => {
           return response.data.results
-        })
+        });
     }
   };
 
@@ -37,7 +37,7 @@ class App extends Component {
       }, 1000);
     });
 
-    // Mapping to food group data
+  // Mapping to food group data
   getOptionValue = option => option.group_id;
   getOptionLabel = option => option.group_name;
 
@@ -53,8 +53,7 @@ class App extends Component {
         getOptionLabel={this.getOptionLabel}
       />
       <br/>
-      <h3> Select a food item that you ate </h3>
-      
+
       </div>
     );
   }
