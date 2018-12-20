@@ -8,8 +8,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      food_item: '',
-      food_group: ''
+      foodItem: '',
+      foodGroup: null
     }
   }
 
@@ -37,6 +37,12 @@ class App extends Component {
       }, 1000);
     });
 
+    handleFoodGroupChange = (e) => {
+      this.setState({
+        foodGroup: e.group_name
+      });
+    }
+
   // Mapping to food group data
   getOptionValue = option => option.group_id;
   getOptionLabel = option => option.group_name;
@@ -44,15 +50,23 @@ class App extends Component {
   render() {
     return (
       <div>
-      <h3>Select a Food Group first. </h3>
+      <h3>Select a Food Group First! </h3>
       <AsyncSelect
         cacheOptions
         defaultOptions
+        isClearable
         loadOptions={this.foodGroupOptions}
         getOptionValue={this.getOptionValue}
         getOptionLabel={this.getOptionLabel}
+        onChange={(e) => {this.handleFoodGroupChange(e)}}
       />
       <br/>
+      <h3> Search for a single food item </h3>
+      <AsyncSelect
+        isClearable
+        loadOptions={this.foodOptions}
+
+      />
 
       </div>
     );
