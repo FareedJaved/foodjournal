@@ -1,90 +1,62 @@
 import React, { Component } from 'react';
 import './App.css';
 import AsyncSelect from 'react-select/lib/Async';
-import 'react-select/dist/react-select.css';
 import axios from 'axios' ;
 
 
 class App extends Component {
-
   constructor(props) {
     super(props);
-
     this.state = {
-      foodItem: '',
-      foodGroup: '',
+      food_item: '',
+      food_group: ''
     }
   }
 
-  loadOptions = (input, callback) => {
-    if (!input) {
-			return Promise.resolve({ options: [] });
-    }
-    return axios.get(`http://localhost:8000/search?item=${input}`)
-      .then((response)=> {
-        console.log(response)
-        return {options: response.data.list.item}
-      })
-  };
-
-  getFoodGroups = (input) => {
-    if (input) {
+  // Gets food groups and filters based on input
+  async getFoodGroups(inputValue: string) {
+    if (inputValue) {
       return axios.get('http://localhost:8000/foodgroups/?format=json')
-        .then((response)=> {
-          console.log(response.data.results.map(x => x['group_name']))
-          return response.data.results.map(x => x['group_name'])
+        .then((response) => {
+          return response.data.results.filter(i =>
+            i.group_name.toLowerCase().includes(inputValue.toLowerCase())
+          );
+        });
+    } else {
+      return axios.get('http://localhost:8000/foodgroups/?format=json')
+        .then((response) => {
+          return response.data.results
         })
     }
-
-  }
-
-  onFoodGroupChange = (input) => {
-    this.setState({
-      foodGroup: input,
-    })
-  }
-
-  onItemChange = (value) =>  {
-    this.setState({
-      foodItem: value,
-    });
-  }
-
-  loadFoodGroupOptions = (inputValue: string) => {
-    setTimeout(() => {
-      console.log(inputValue)
-      this.getFoodGroups(inputValue);
-    }, 5000);
   };
 
+    foodGroupOptions = inputValue =>
+      new Promise(resolve => {
+        setTimeout(() => {
+          resolve(this.getFoodGroups(inputValue));
+        }, 1000);
+      });
 
-  render() {
-    return (
-      <div>
+    // Mapping to food group data
+    getOptionValue = option => option.group_id;
+    getOptionLabel = option => option.group_name;
 
-        <h3>Select a food group first </h3>
+    render() {
+
+      return (
+        <div>
+        <h3>Select a Food Group first. </h3>
         <AsyncSelect
           cacheOptions
-          loadOptions={this.loadFoodGroupOptions}
           defaultOptions
-          onInputChange={this.onFoodGroupChange}
+          loadOptions={this.foodGroupOptions}
+          getOptionValue={this.getOptionValue}
+          getOptionLabel={this.getOptionLabel}
         />
 
-        <br/>
-
-        <h3>Enter what you ate</h3>
-        <AsyncSelect
-          cacheOptions
-          loadOptions={this.loadOptions}
-          defaultOptions
-          onInputChange={this.onItemChange}
-        />
-
-        <br/>
-
-      </div>
-    );
-  }
+        </div>
+      );
+    }
 }
 
 export default App;
