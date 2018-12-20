@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'journalapi',
     'corsheaders',
+    'knox',
 ]
 
 REST_FRAMEWORK = {
@@ -49,6 +50,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 30,
     'DEFAULT_RENDERER_CLASSES': (
@@ -97,8 +99,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'foodjournal',
         'PGUSER': os.environ['PGUSER'],
-        'PGPASSWORD': os.environ['PGPASSWORD'], 
-        'HOST': os.environ['PGHOST'], 
+        'PGPASSWORD': os.environ['PGPASSWORD'],
+        'HOST': os.environ['PGHOST'],
         'PORT': 5432,
     }
 }

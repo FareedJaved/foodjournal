@@ -10,8 +10,10 @@ djangorestframework = "*"
 "psycopg2" = "*"
 pylint-django = "*"
 django-cors-headers = "*"
+django-rest-knox = "*"
 
 [dev-packages]
+autopep8 = "*"
 
 [requires]
 python_version = "3.6"
