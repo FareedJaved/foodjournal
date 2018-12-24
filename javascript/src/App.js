@@ -46,6 +46,15 @@ class App extends Component {
     }
   };
 
+  // This is not currently functional
+  handleFoodChange = e => {
+    if (e) {
+      this.setState({
+        foodItem: e
+      });
+    }
+  };
+
   // Mapping to food group data
   getOptionValue = option => option.group_id;
   getOptionLabel = option => option.group_name;
@@ -66,6 +75,14 @@ class App extends Component {
           }}
         />
         <br />
+        <h3>Enter a food item that you ate. </h3>
+        <AsyncSelect
+          isClearable
+          loadOptions={this.foodOptions}
+          onInputChange={e => {
+            this.handleFoodChange(e);
+          }}
+        />
       </div>
     );
   }
