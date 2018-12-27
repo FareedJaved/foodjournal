@@ -14,11 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from django.views.generic.base import TemplateView
 from rest_framework import routers
-from foodjournal import views
+
 from knox import views as knox_views
+
 from foodjournal.views import LoginView
+from foodjournal import views
+from journalapi.registration_api import RegistrationAPI
 
 # Routers provide an easy way of automatically determining the URL conf
 router = routers.DefaultRouter()
@@ -34,5 +36,6 @@ urlpatterns = [
     url(r'logoutall/', knox_views.LogoutAllView.as_view(),
         name='knox_logoutall'),
     url(r'^', include(router.urls)),
-    url(r'^api/auth/', include('knox.urls')),
+    url(r'api/auth/', include('knox.urls')),
+    url(r'^api/auth/register/$', RegistrationAPI.as_view()),
 ]
