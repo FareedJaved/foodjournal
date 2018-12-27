@@ -25,7 +25,7 @@ SECRET_KEY = '4r5#g=6v-5dz#9n@sl!*k8tk6v5u*p+nsiy*xet)f&gqc-o!l3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -47,10 +47,8 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',
+                                       'rest_framework.authentication.BasicAuthentication'),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 30,
     'DEFAULT_RENDERER_CLASSES': (
