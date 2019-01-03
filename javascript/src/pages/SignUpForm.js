@@ -3,16 +3,51 @@ import { Link, Redirect } from "react-router-dom";
 import axios from "axios";
 
 class SignUpForm extends Component {
-  state = {
-    toHome: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      toHome: false,
+      token: null
+    };
+    this.handleState = this.handleState.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleState = response => {
+    console.log(response);
+    this.setState({
+      toHome: true,
+      token: response.token
+    });
   };
-  handleSubmit = e => {
-    // FIrst save the user
-    //then call setState
-  };
+
+  async handleSubmit(e) {
+    e.preventDefault();
+    // Insert logic to handle bad input
+    let headers = {
+      "content-type": "application/json"
+    };
+
+    return axios
+      .post(
+        "http://localhost:8000/api/auth/register/",
+        {
+          username: e.target[0].value,
+          password: e.target[1].value
+        },
+        headers
+      )
+      .then(response => {
+        this.handleState(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
   render() {
     if (this.state.toHome === true) {
-      <Redirect to="/signin" />;
+      return <Redirect to="/signin" />;
     }
     return (
       <div>
