@@ -7,14 +7,27 @@ class SignUpForm extends Component {
     super(props);
     this.state = {
       toHome: false,
-      token: null
+      token: null,
+      usernameError: null,
+      passwordError: null
     };
+
     this.handleState = this.handleState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleError = this.handleError.bind(this);
   }
 
+  handleError = error => {
+    this.setState({
+      toHome: false,
+      token: null,
+      usernameError: JSON.stringify(error.response.data.username),
+      passwordError: JSON.stringify(error.response.data.password)
+    });
+  };
+
   handleState = response => {
-    console.log(response);
+    console.log("Hello from handleState");
     this.setState({
       toHome: true,
       token: response.token
@@ -40,8 +53,9 @@ class SignUpForm extends Component {
       .then(response => {
         this.handleState(response);
       })
-      .catch(function(error) {
-        console.log(error);
+      .catch(error => {
+        // console.log(error);
+        this.handleError(error);
       });
   }
 
@@ -66,6 +80,8 @@ class SignUpForm extends Component {
               />
             </div>
 
+            {this.state.usernameError}
+
             <div className="Form Field">
               <label className="FormField__Label" htmlFor="password">
                 Password
@@ -78,6 +94,8 @@ class SignUpForm extends Component {
                 name="password"
               />
             </div>
+
+            {this.state.passwordError}
 
             <div className="Form Field">
               <button className="FormField__Button">Sign-Up</button>
