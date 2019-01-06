@@ -9,6 +9,7 @@ class FoodSearch extends Component {
       foodGroup: null
     };
   }
+
   /* Gets food groups and filters based on input */
   async getFoodGroups(inputValue) {
     if (inputValue) {
@@ -71,7 +72,8 @@ class FoodSearch extends Component {
             this.handleFoodGroupChange(e);
           }}
         />
-        <br />n<h3>Enter a food item that you ate. </h3>
+        <br />
+        <h3>Enter a food item that you ate. </h3>
         <AsyncSelect
           isClearable
           loadOptions={this.foodOptions}
