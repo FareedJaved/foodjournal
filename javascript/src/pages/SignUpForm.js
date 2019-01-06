@@ -1,18 +1,19 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
-import axios from "axios";
+import AuthService from "../lib/AuthService";
 
 class SignUpForm extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       toHome: false,
-      token: null,
       usernameError: null,
       passwordError: null
     };
 
-    this.handleState = this.handleState.bind(this);
+    this.Auth = new AuthService();
+    this.handleSuccess = this.handleSuccess.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleError = this.handleError.bind(this);
   }
@@ -20,41 +21,28 @@ class SignUpForm extends Component {
   handleError = error => {
     this.setState({
       toHome: false,
-      token: null,
       usernameError: JSON.stringify(error.response.data.username),
       passwordError: JSON.stringify(error.response.data.password)
     });
   };
 
-  handleState = response => {
-    console.log("Hello from handleState");
+  handleSuccess = response => {
     this.setState({
-      toHome: true,
-      token: response.token
+      toHome: true
     });
   };
 
   async handleSubmit(e) {
     e.preventDefault();
-    // Insert logic to handle bad input
-    let headers = {
-      "content-type": "application/json"
-    };
 
-    return axios
-      .post(
-        "http://localhost:8000/api/auth/register/",
-        {
-          username: e.target[0].value,
-          password: e.target[1].value
-        },
-        headers
-      )
+    let username = e.target[0].value;
+    let password = e.target[1].value;
+
+    this.Auth.signup(username, password)
       .then(response => {
-        this.handleState(response);
+        this.handleSuccess(response);
       })
       .catch(error => {
-        // console.log(error);
         this.handleError(error);
       });
   }
