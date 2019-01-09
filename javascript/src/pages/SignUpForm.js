@@ -7,7 +7,7 @@ class SignUpForm extends Component {
     super(props);
 
     this.state = {
-      toHome: false,
+      toSignin: false,
       usernameError: null,
       passwordError: null
     };
@@ -20,7 +20,7 @@ class SignUpForm extends Component {
 
   handleError = error => {
     this.setState({
-      toHome: false,
+      toSignin: false,
       usernameError: JSON.stringify(error.response.data.username),
       passwordError: JSON.stringify(error.response.data.password)
     });
@@ -28,7 +28,7 @@ class SignUpForm extends Component {
 
   handleSuccess = response => {
     this.setState({
-      toHome: true
+      toSignin: true
     });
   };
 
@@ -48,7 +48,7 @@ class SignUpForm extends Component {
   }
 
   render() {
-    if (this.state.toHome === true) {
+    if (this.state.toSignin === true) {
       return <Redirect to="/signin" />;
     }
     return (
