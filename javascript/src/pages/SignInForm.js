@@ -5,24 +5,41 @@ import AuthService from "../lib/AuthService";
 class SignInForm extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       toDashboard: false,
       errorMessage: ""
     };
+
     this.Auth = new AuthService();
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSuccess = this.handleSuccess.bind(this);
+    this.handleError = this.handleError.bind(this);
   }
 
+  handleError = error => {
+    this.setState({
+      toDashboard: false,
+      errorMessage: error.response.data
+    });
+  };
+
+  handleSuccess = response => {
+    this.setState({
+      toDashboard: true
+    });
+  };
   async handleSubmit(e) {
     e.preventDefault();
+
     let username = e.target[0].value;
     let password = e.target[1].value;
+
     this.Auth.login(username, password)
       .then(response => {
-        this.setState({ toDashboard: true });
+        this.handleSuccess(response);
       })
-      .catch(error =>
-        this.setState({ toDashboard: false, errorMessage: error.response.data })
-      );
+      .catch(error => this.handleError(error));
   }
 
   render() {
