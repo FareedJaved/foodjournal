@@ -8,10 +8,13 @@ from knox.auth import TokenAuthentication
 from knox.views import LoginView as KnoxLoginView
 
 from journalapi.models import User, FoodEntry, FoodGroups
-from foodjournal.serializers import UserSerializer, FoodEntrySerializer, FoodGroupsSerializer
+from foodjournal.serializers import FoodEntrySerializer, FoodGroupsSerializer
 
 
 class LoginView(KnoxLoginView):
+    """
+    API endpoint to log users in
+    """
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
@@ -22,20 +25,14 @@ class LoginView(KnoxLoginView):
         return super(LoginView, self).post(request, format=None)
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
 class FoodEntryViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows food entries to be viewed or edited.
     """
     queryset = FoodEntry.objects.all()
     serializer_class = FoodEntrySerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated)
 
 
 class FoodGroupsViewSet(viewsets.ModelViewSet):
