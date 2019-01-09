@@ -1,12 +1,34 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import AuthService from "../lib/AuthService";
 
 class SignInForm extends Component {
-  handleSubmit = () => {
-    // This function will sign in a User
-    // and take them to the home page
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      toDashboard: false,
+      errorMessage: ""
+    };
+    this.Auth = new AuthService();
+  }
+
+  async handleSubmit(e) {
+    e.preventDefault();
+    let username = e.target[0].value;
+    let password = e.target[1].value;
+    this.Auth.login(username, password)
+      .then(response => {
+        this.setState({ toDashboard: true });
+      })
+      .catch(error =>
+        this.setState({ toDashboard: false, errorMessage: error.response.data })
+      );
+  }
+
   render() {
+    if (this.state.toDashboard === true) {
+      return <Redirect to="/home" />;
+    }
     return (
       <div className="Form Center">
         <form className="Form Fields" onSubmit={this.handleSubmit}>
