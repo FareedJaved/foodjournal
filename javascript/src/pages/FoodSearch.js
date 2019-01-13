@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import AsyncSelect from "react-select/lib/Async";
+
 class FoodSearch extends Component {
   constructor(props) {
     super(props);
@@ -60,7 +61,8 @@ class FoodSearch extends Component {
   render() {
     return (
       <div>
-        <h3>Select a Food Group First!</h3>
+        <h3>Select a Food Group</h3>
+
         <AsyncSelect
           cacheOptions
           defaultOptions
@@ -72,6 +74,7 @@ class FoodSearch extends Component {
             this.handleFoodGroupChange(e);
           }}
         />
+
         <br />
         <h3>Enter a food item that you ate. </h3>
         <AsyncSelect
