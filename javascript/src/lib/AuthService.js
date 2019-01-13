@@ -9,6 +9,14 @@ export default class AuthService {
 
     this.signup = this.signup.bind(this);
     this.login = this.login.bind(this);
+    this.signupSuccess = this.signupSuccess.bind(this);
+  }
+
+  async signupSuccess(response) {
+    console.log("singup success");
+    let token = response["data"].token;
+    this.tokenApi.setToken(token);
+    return response;
   }
 
   async signup(username, password) {
@@ -22,8 +30,7 @@ export default class AuthService {
         this.headers
       )
       .then(response => {
-        this.tokenApi.setToken(response.token);
-        return response;
+        return this.signupSuccess(response);
       });
   }
 
