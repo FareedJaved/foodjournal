@@ -19,17 +19,20 @@ class SignUpForm extends Component {
   }
 
   handleError = error => {
+    console.log(error);
     this.setState({
       toSignin: false,
-      usernameError: JSON.stringify(error.response.data.username),
-      passwordError: JSON.stringify(error.response.data.password)
+      usernameError: JSON.stringify(error["data"].username),
+      passwordError: JSON.stringify(error["data"].password)
     });
   };
 
   handleSuccess = response => {
-    this.setState({
-      toSignin: true
-    });
+    if (response.status === 200) {
+      this.setState({
+        toSignin: true
+      });
+    }
   };
 
   async handleSubmit(e) {
@@ -43,7 +46,8 @@ class SignUpForm extends Component {
         this.handleSuccess(response);
       })
       .catch(error => {
-        this.handleError(error);
+        console.log(error.response);
+        this.handleError(error.response);
       });
   }
 
