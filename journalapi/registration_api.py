@@ -11,6 +11,7 @@ from foodjournal.serializers import CreateUserSerialzer, UserSerializer
 class RegistrationAPI(generics.GenericAPIView):
     serializer_class = CreateUserSerialzer
     queryset = User.objects.all()
+    permission_classes = (permissions.AllowAny,)
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
